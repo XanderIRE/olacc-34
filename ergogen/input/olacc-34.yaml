@@ -1,0 +1,196 @@
+points:
+  zones:
+    matrix:
+      columns:
+        pinky:
+        ring.key.stagger: 0.66U
+        middle.key.stagger: 0.25U
+        index.key.stagger: -0.25U
+        inner.key.stagger: -0.15U
+      rows:
+        bottom.padding: U
+        home.padding: U
+        top.padding: U
+    thumb:
+      anchor:
+        ref: matrix_index_bottom
+        shift: [0.9U, -1.3U]
+        rotate: -10
+      columns:
+        tucky:
+          key.name: thumb_tucky
+        reachy:
+          key.spread: U
+          key.splay: -10
+          key.origin: [-0.5U, -0.5U]
+          key.name: thumb_reachy
+
+outlines:
+  raw:
+# Outline of keys and micro controller area
+    - what: rectangle
+      where: true
+      asym: left
+      size: [1U,1U]
+      corner:
+    - what: rectangle
+      where: thumb_reachy
+      size: [1.17U, 3U]
+      adjust:
+        ref: matrix_inner_home
+        shift: [1U, 0]
+    - what: rectangle
+      where: thumb_reachy
+      size: [1.17U, 2.3U]
+      adjust:
+        ref: matrix_inner_bottom
+        shift: [1U, 0]
+    - what: rectangle
+      where: matrix_inner_bottom
+      size: [1U, 2U]
+    - what: rectangle
+      where: thumb_tucky
+      size: [1U, 1U]
+    - what: rectangle
+      where: thumb_reachy
+      size: [1U, 1U]
+      adjust:
+          ref: thumb_reachy
+          rotate: 0
+          shift: [-5, 0]
+
+# # Padding out bottom of board
+#     - what: rectangle
+#       where: thumb_tucky
+#       size: [3U, 1.1U]
+#       adjust: 
+#         ref: thumb_tucky
+#         shift: [-2U, 1]
+#     - what: rectangle
+#       where: matrix_pinky_bottom
+#       size: [U, 2U]
+#       adjust:
+#         ref: matrix_middle_bottom
+#         shift: [-2U, -8.3]
+#     - what: rectangle
+#       where: matrix_middle_bottom
+#       size: [3U, 2U]
+
+  panel:
+    - what: outline
+      name: raw
+      fillet: 1
+  switch_cutouts:
+    - what: rectangle
+      where: true
+      asym: left
+      size: 14
+      bound: false
+  switch_plate:
+    main:
+      what: outline
+      name: panel
+      fillet: 0.5
+    keyholes:
+      what: outline
+      name: switch_cutouts
+      operation: subtract
+  preview:
+    [panel]
+
+pcbs:
+  olacc-34:
+    outlines:
+      board:
+        outline: preview
+      keycaps:
+        outline: switch_cutouts
+        layer: Eco1.User
+    footprints:
+      mx_solder:
+        what: mx
+        where: true
+        params:
+          from: GND
+          to: "{{name}}"
+          reverse: true
+          keycaps: true
+      # mx_hotswap:
+      #   what: mx
+      #   where: true
+      #   adjust:
+      #     rotate: 180
+      #   params:
+      #     from: GND
+      #     to: "{{name}}"
+      #     reverse: true
+      #     keycaps: true
+      #     hotswap: true
+      mcu:
+        what: promicro
+        where:
+          - ref: matrix_inner_home
+            shift: [1.1U, 0.55U]
+            rotate: -90
+        params:
+          P2: matrix_pinky_home
+          P18: matrix_pinky_top
+          P19: matrix_ring_top
+          P20: matrix_middle_top
+          P21: matrix_index_top
+          P15: matrix_ring_home
+          P14: matrix_middle_home
+          P16: matrix_index_home
+          P10: matrix_inner_home
+          P1: matrix_inner_top
+          P7: matrix_inner_bottom
+          P3: matrix_pinky_bottom
+          P4: matrix_ring_bottom
+          P5: matrix_middle_bottom
+          P6: matrix_index_bottom
+          P8: thumb_tucky
+          P9: thumb_reachy
+      powerswitch_front:
+        what: slider
+        where:
+          ref: matrix_inner_bottom
+          rotate: -90
+          shift: [1.5U, 8.2]
+        params:
+          from: RAW
+          to: BAT
+          side: F
+      powerswitch_back:
+        what: slider
+        where:
+          ref: matrix_inner_bottom
+          rotate: -90
+          shift: [1.5U, 8.2]
+        params:
+          from: RAW
+          to: BAT
+          side: B
+      jstph:
+        what: jstph
+        where:
+          ref: matrix_inner_bottom
+          shift: [1U, 0.3U]
+          rotate: 180
+        params:
+          pos: BAT
+          neg: GND
+          side: B
+      trrs:
+        what: trrs
+        where:
+          ref: matrix_inner_bottom
+          shift: [30, -3]
+          rotate: -90
+        params:
+          mirror: true
+          reverse: true
+          symmetric: false
+          A: VCC
+          B: P2
+          C: P3
+          D: GND
