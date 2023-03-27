@@ -27,7 +27,6 @@ points:
 
 outlines:
   raw:
-# Outline of keys and micro controller area
     - what: rectangle
       where: true
       asym: left
@@ -58,23 +57,6 @@ outlines:
           ref: thumb_reachy
           rotate: 0
           shift: [-5, 0]
-
-# # Padding out bottom of board
-#     - what: rectangle
-#       where: thumb_tucky
-#       size: [3U, 1.1U]
-#       adjust: 
-#         ref: thumb_tucky
-#         shift: [-2U, 1]
-#     - what: rectangle
-#       where: matrix_pinky_bottom
-#       size: [U, 2U]
-#       adjust:
-#         ref: matrix_middle_bottom
-#         shift: [-2U, -8.3]
-#     - what: rectangle
-#       where: matrix_middle_bottom
-#       size: [3U, 2U]
 
   panel:
     - what: outline
@@ -115,17 +97,6 @@ pcbs:
           to: "{{name}}"
           reverse: true
           keycaps: true
-      # mx_hotswap:
-      #   what: mx
-      #   where: true
-      #   adjust:
-      #     rotate: 180
-      #   params:
-      #     from: GND
-      #     to: "{{name}}"
-      #     reverse: true
-      #     keycaps: true
-      #     hotswap: true
       mcu:
         what: promicro
         where:
