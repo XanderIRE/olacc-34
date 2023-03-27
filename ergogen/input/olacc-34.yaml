@@ -190,7 +190,7 @@ pcbs:
           mirror: true
           reverse: true
           symmetric: false
-          A: VCC
-          B: P2
-          C: P3
-          D: GND
+          A: GND
+          B: GND
+          C: P0
+          D: VCC
